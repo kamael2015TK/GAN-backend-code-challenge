@@ -4,12 +4,38 @@
   "description": "GAN Integrity backend code challenge",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "prepare": "husky install",
+    "start": "node index.js",
+    "start:server": "node server.js",
+    "start:server:dev": "nodemon server.js",
+    "build:docker": "docker build -t gan-be-image . && docker create -p 127.0.0.1:8080:8080 --name gan-be gan-be-image && docker container start gan-be"
   },
   "author": "GAN Integrity",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "16.4.5",
+    "express": "4.21.1",
     "fs-extra": "7.0.0",
-    "node-fetch": "^2.6.1"
+    "lodash.get": "4.4.2",
+    "node-fetch": "2.6.1",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "5.0.1",
+    "uuid": "10.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.12.0",
+    "eslint": "9.12.0",
+    "eslint-config-prettier": "9.1.0",
+    "globals": "15.11.0",
+    "husky": "9.1.6",
+    "lint-staged": "15.2.10",
+    "nodemon": "3.1.7",
+    "prettier": "3.3.3"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint",
+      "prettier --write --ignore-unknown"
+    ]
   }
 }
