@@ -43,7 +43,7 @@ class QueueService {
 
     runCleanup() {
         // log start of job
-      const maxAge = new Date(Date.now() - queueTTL);
+      const maxAge = new Date(Date.now() - this.#queueTTL);
       this.queue = Object.entries(this.#queue).forEach(([key, item]) => {
         if(item.timestamp < maxAge) {
             delete this.#queue[key];
