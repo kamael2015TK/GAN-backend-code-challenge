@@ -7,6 +7,7 @@ class QueueService {
   #queue;
   #cleanupInterval;
   #queueTTL;
+  #intervalRef;
   
     constructor(cleanupInterval, queueTTL) {
       this.#queue = {};
@@ -53,7 +54,17 @@ class QueueService {
     }
   
     runAutoCleanup() {
-      setInterval(() => this.runCleanup(), this.#cleanupInterval); 
+      if(this.#intervalRef) {
+        return;
+      }
+      this.#intervalRef = setInterval(() => this.runCleanup(), this.#cleanupInterval); 
+    }
+
+    stopAutoCleanup() {
+      if (this.#intervalRef) {
+        clearInterval(this.#intervalRef);
+        this.#intervalRef = null; 
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+/*global process*/
 const express = require('express');
 const router = express.Router();
 const { v4: uuid } = require('uuid');
@@ -23,6 +24,10 @@ const ROUTES = {
 };
 
 const queue = new QueueService(runtimeConfig.getQueueCleanupInterval(), runtimeConfig.getQueueTTL());
+queue.runAutoCleanup();
+
+process.on('SIGINT', () => queue && queue.stopAutoCleanup());
+process.on('SIGTERM', () => queue && queue.stopAutoCleanup());
 
 router.get(ROUTES.GET_CITY_BY_TAG, (req, res) => {
     if(!req.query.tag) {
