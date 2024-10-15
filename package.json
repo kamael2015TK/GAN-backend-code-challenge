@@ -4,12 +4,21 @@
   "description": "GAN Integrity backend code challenge",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:server": "node server.js",
+    "start:server:dev": "nodemon server.js"
   },
   "author": "GAN Integrity",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "16.4.5",
+    "express": "4.21.1",
     "fs-extra": "7.0.0",
-    "node-fetch": "^2.6.1"
+    "lodash.get": "4.4.2",
+    "node-fetch": "2.6.1",
+    "uuid": "10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.7"
   }
 }
