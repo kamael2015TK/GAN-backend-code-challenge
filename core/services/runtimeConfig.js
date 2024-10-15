@@ -16,10 +16,17 @@ const getQueueTTL = () => process.env.QUEUE_TTL_IN_MS || dayInMs;
 
 const getHost = () => process.env.HOST || 'http://127.0.0.1:8080';
 
+const getAppData = () => ({
+  title: process.env.npm_package_name,
+  version: process.env.npm_package_version,
+  description: 'GAN Integrity backend code challenge',
+});
+
 module.exports = {
   getPort,
   getApiKey,
   getQueueCleanupInterval,
   getQueueTTL,
   getHost,
+  getAppData,
 };

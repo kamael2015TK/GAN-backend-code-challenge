@@ -2,15 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuid } = require('uuid');
-const apiKeyMiddleware = require('../../core/middleware/apiKeyMiddleware');
 const QueueService = require('./services/queueService');
 const citySearchService = require('./services/citySearchService');
 const cityService = require('./services/cityService');
 const QUEUE_STATUS = require('./constants/queueStatus');
 const runtimeConfig = require('../../core/services/runtimeConfig');
-
-// setup api-key middleware
-router.use(apiKeyMiddleware);
 
 const DYNAMIC_ROUTE_VARIABLES = {
   ID: ':id',
@@ -29,6 +25,42 @@ queue.runAutoCleanup();
 process.on('SIGINT', () => queue && queue.stopAutoCleanup());
 process.on('SIGTERM', () => queue && queue.stopAutoCleanup());
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Tag search
+ *     description: Get city by tag
+ *
+ * @swagger
+ * /cities-by-tag:
+ *   get:
+ *     description: Searches city by tag and is active
+ *     tags: [Tag search]
+ *     security:
+ *       - ApiKeyAuth: []
+ *     parameters:
+ *           - in: query
+ *             name: tag
+ *             schema:
+ *               type: string
+ *             required: true
+ *             description: The tag used to filter cities.
+ *           - in: query
+ *             name: isActive
+ *             schema:
+ *               type: boolean
+ *             required: false
+ *             description: Optional flag to filter cities by their active status.
+ *     responses:
+ *       200:
+ *         description: List of cities
+ *       401:
+ *         description: User not authenticated
+ *       400:
+ *         description: Bad request, tag not provided
+ *       500:
+ *         description: Server Error
+ */
 router.get(ROUTES.GET_CITY_BY_TAG, (req, res) => {
   if (!req.query.tag) {
     res.status(400).json({ message: 'Tag was not provided' });
