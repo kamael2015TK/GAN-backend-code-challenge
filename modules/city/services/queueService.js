@@ -1,4 +1,4 @@
-const QUEUE_STATUS = require("../constants/queueStatus");
+const QUEUE_STATUS = require('../constants/queueStatus');
 
 // this service will not work for multiple instances og this program running
 // you'll need database integration to support horizontal scaling but for this demo it should do it
@@ -32,7 +32,7 @@ class QueueService {
     };
   }
 
-  updateRejected(id, errorMessage = "") {
+  updateRejected(id, errorMessage = '') {
     if (!this.#queue[id]) {
       // log error
       throw new Error(`Queue ${id} could not be updated`);
@@ -64,10 +64,7 @@ class QueueService {
     if (this.#intervalRef) {
       return;
     }
-    this.#intervalRef = setInterval(
-      () => this.runCleanup(),
-      this.#cleanupInterval,
-    );
+    this.#intervalRef = setInterval(() => this.runCleanup(), this.#cleanupInterval);
   }
 
   stopAutoCleanup() {

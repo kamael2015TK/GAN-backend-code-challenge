@@ -1,4 +1,4 @@
-const SEARCH_OPERATIONS = require("../constants/searchOperations");
+const SEARCH_OPERATIONS = require('../constants/searchOperations');
 
 const validateSearch = (search) => (search.value === undefined ? null : search);
 

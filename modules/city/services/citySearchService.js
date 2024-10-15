@@ -1,6 +1,6 @@
-const cities = require("../../../addresses.json");
-const builder = require("../../../core/services/searchQueryBuilder");
-const search = require("../../../core/services/searchService");
+const cities = require('../../../addresses.json');
+const builder = require('../../../core/services/searchQueryBuilder');
+const search = require('../../../core/services/searchService');
 
 /**
  * Disclaimer: this could have been done with a simple filter,
@@ -9,15 +9,15 @@ const search = require("../../../core/services/searchService");
  */
 const searchCity = (query) => {
   const searchQuery = builder.and([
-    builder.includes("tags", query.tag),
-    builder.equal("isActive", query.isActive),
-    builder.equal("guid", query.guid),
+    builder.includes('tags', query.tag),
+    builder.equal('isActive', query.isActive),
+    builder.equal('guid', query.guid),
   ]);
 
   if (searchQuery) {
     return search(cities, searchQuery);
   } else {
-    throw new Error("Search query is null");
+    throw new Error('Search query is null');
   }
 };
 
